@@ -83,16 +83,12 @@ def ensure_model_files():
                     raise
         else:
             # File already exists, no need to download
-            try:
-                st.info(f"✓ File already exists: {relative_path}")
-            except:
-                print(f"✓ File already exists: {relative_path}")
+            # Silent - no output needed
+            pass
     
     if files_downloaded:
-        try:
-            st.success("✅ All required model files are now available!")
-        except:
-            print("✅ All required model files are now available!")
+        st.success("✅ Model files ready!")
+        # Removed "All required model files are now available!" message
 
 # Load model info
 @st.cache_data
