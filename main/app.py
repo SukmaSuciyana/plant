@@ -34,14 +34,9 @@ def ensure_model_files():
     This function should be called before loading the model.
     """
     # Define the mapping between local paths and Google Drive file IDs
-    # IMPORTANT: Replace these placeholder IDs with actual Google Drive file IDs
+    # Only download the large variables.data file, other files are stored in Git
     MODEL_FILES = {
-        "saved_model_format/saved_model.pb": "<GDRIVE_FILE_ID_SAVED_MODEL_PB>",
-        "saved_model_format/variables/variables.index": "<GDRIVE_FILE_ID_VARIABLES_INDEX>",
         "saved_model_format/variables/variables.data-00000-of-00001": "1Db4zRuOoAYlwHfQjHwdd5pcRzUiIfPTC",
-        "saved_model_format/fingerprint.pb": "<GDRIVE_FILE_ID_FINGERPRINT_PB>",
-        # Uncomment if model_info.json also needs to be downloaded
-        # "model/model_info.json": "<GDRIVE_FILE_ID_MODEL_INFO_JSON>",
     }
     
     # Get base directory (parent of 'main' folder where app.py is located)
