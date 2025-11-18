@@ -115,19 +115,25 @@ def load_model_info():
 # Load model
 @st.cache_resource
 def load_model():
-    # Ensure all model files are available before loading
-    ensure_model_files()
-    
     # Path ke saved_model
     base_dir = Path(__file__).parent.parent
     saved_model_path = base_dir / "saved_model_format"
     
-    # Jika tidak ditemukan, coba path absolut
-    if not saved_model_path.exists():
-        saved_model_path = Path(r"D:\Download\plantvilage-sev\saved_model_format")
+    # Debug: tampilkan path yang dicari
+    print(f"DEBUG - Base dir: {base_dir}")
+    print(f"DEBUG - Model path: {saved_model_path}")
+    print(f"DEBUG - Model path exists: {saved_model_path.exists()}")
     
     if not saved_model_path.exists():
-        raise FileNotFoundError(f"Model not found at {saved_model_path}")
+        raise FileNotFoundError(f"Model directory not found at {saved_model_path}")
+    
+    # Verifikasi file penting ada
+    saved_model_pb = saved_model_path / "saved_model.pb"
+    print(f"DEBUG - saved_model.pb path: {saved_model_pb}")
+    print(f"DEBUG - saved_model.pb exists: {saved_model_pb.exists()}")
+    
+    if not saved_model_pb.exists():
+        raise FileNotFoundError(f"saved_model.pb not found at {saved_model_pb}")
     
     # Load SavedModel menggunakan tf.saved_model.load
     loaded_model = tf.saved_model.load(str(saved_model_path))
@@ -196,6 +202,10 @@ def format_class_name(class_name):
     """Format nama kelas agar lebih readable"""
     parts = class_name.replace("___", " - ").replace("_", " ")
     return parts
+
+# Ensure model files are downloaded before loading
+# This is called outside of cached functions to show progress properly
+ensure_model_files()
 
 # Load model dan info
 try:
