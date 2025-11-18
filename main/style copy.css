@@ -1,0 +1,161 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Header Styles */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.header p {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Result Card */
+.result-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.result-card h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.result-card p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Prediction Item */
+.prediction-item {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    border: 1px solid #e9ecef;
+}
+
+.prediction-item:hover {
+    background: #e9ecef;
+    transition: background 0.3s ease;
+}
+
+/* Confidence Bar */
+.confidence-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+/* Sidebar Styling */
+.css-1d391kg {
+    background: #f8f9fa;
+}
+
+/* Button Customization */
+.stButton > button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Upload Area */
+.uploadedFile {
+    border: 2px dashed #667eea;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+/* Info boxes */
+.stAlert {
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+/* Progress bar */
+.stProgress > div > div {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Markdown in sidebar */
+.css-1cypcdb {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #667eea;
+}
+
+/* Image container */
+.stImage {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Spinner */
+.stSpinner > div {
+    border-top-color: #667eea !important;
+}
