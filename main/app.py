@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import warnings
+import gdown
 warnings.filterwarnings('ignore')
 
 # Konfigurasi halaman
@@ -26,9 +27,85 @@ def load_css():
 
 load_css()
 
+# Function to ensure all model files are available
+def ensure_model_files():
+    """
+    Check if model files exist locally, and download from Google Drive if not.
+    This function should be called before loading the model.
+    """
+    # Define the mapping between local paths and Google Drive file IDs
+    # IMPORTANT: Replace these placeholder IDs with actual Google Drive file IDs
+    MODEL_FILES = {
+        "saved_model_format/saved_model.pb": "<GDRIVE_FILE_ID_SAVED_MODEL_PB>",
+        "saved_model_format/variables/variables.index": "<GDRIVE_FILE_ID_VARIABLES_INDEX>",
+        "saved_model_format/variables/variables.data-00000-of-00001": "1Db4zRuOoAYlwHfQjHwdd5pcRzUiIfPTC",
+        "saved_model_format/fingerprint.pb": "<GDRIVE_FILE_ID_FINGERPRINT_PB>",
+        # Uncomment if model_info.json also needs to be downloaded
+        # "model/model_info.json": "<GDRIVE_FILE_ID_MODEL_INFO_JSON>",
+    }
+    
+    # Get base directory (parent of 'main' folder where app.py is located)
+    base_dir = Path(__file__).parent.parent
+    
+    # Track if any files were downloaded
+    files_downloaded = False
+    
+    for relative_path, file_id in MODEL_FILES.items():
+        target_path = base_dir / relative_path
+        
+        # Create parent directories if they don't exist
+        target_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        if not target_path.exists():
+            # File doesn't exist, download it
+            if file_id.startswith("<GDRIVE_FILE_ID_"):
+                # Placeholder ID detected - show warning
+                try:
+                    st.warning(f"⚠️ Please replace the placeholder Google Drive ID for: `{relative_path}`")
+                except:
+                    print(f"⚠️ Please replace the placeholder Google Drive ID for: {relative_path}")
+            else:
+                # Valid file ID, proceed with download
+                url = f"https://drive.google.com/uc?id={file_id}"
+                try:
+                    try:
+                        with st.spinner(f"📥 Downloading {relative_path}..."):
+                            gdown.download(url, str(target_path), quiet=False)
+                        st.success(f"✅ Downloaded: {relative_path}")
+                    except:
+                        # Fallback if streamlit is not available in this context
+                        print(f"📥 Downloading {relative_path}...")
+                        gdown.download(url, str(target_path), quiet=False)
+                        print(f"✅ Downloaded: {relative_path}")
+                    
+                    files_downloaded = True
+                except Exception as e:
+                    error_msg = f"❌ Failed to download {relative_path}: {str(e)}"
+                    try:
+                        st.error(error_msg)
+                    except:
+                        print(error_msg)
+                    raise
+        else:
+            # File already exists, no need to download
+            try:
+                st.info(f"✓ File already exists: {relative_path}")
+            except:
+                print(f"✓ File already exists: {relative_path}")
+    
+    if files_downloaded:
+        try:
+            st.success("✅ All required model files are now available!")
+        except:
+            print("✅ All required model files are now available!")
+
 # Load model info
 @st.cache_data
 def load_model_info():
+    # Ensure model files are available (including model_info.json if it's in the mapping)
+    # Note: Only uncomment this if model_info.json is also downloaded from Google Drive
+    # ensure_model_files()
+    
     # Coba beberapa path yang mungkin
     base_dir = Path(__file__).parent.parent
     model_info_path = base_dir / "model" / "model_info.json"
@@ -43,6 +120,9 @@ def load_model_info():
 # Load model
 @st.cache_resource
 def load_model():
+    # Ensure all model files are available before loading
+    ensure_model_files()
+    
     # Path ke saved_model
     base_dir = Path(__file__).parent.parent
     saved_model_path = base_dir / "saved_model_format"
